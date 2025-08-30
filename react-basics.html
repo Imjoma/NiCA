@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>React Basics</title>
+  </head>
+  <body>
+    <!-- This element will be displayed first; before ReactDOM render -->
+    <!-- • was given to react to keep things isolated -->
+    <!-- • elements that doesn't usually change should be outside ReactDOM  -->
+    <div class="js-container">see me loading?</div>
+
+    <!-- Installing the React and React DOM: npm install react react-dom -->
+    <!-- Exterenal libraries: in this case; maintained version of React by: supersimpledev -->
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <!-- React DOM features specific for websites; controls the tree structure of a website -->
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+    <!-- Babel: Javascript Compiler: translate other languages into Javasacript -->
+    <!-- • allows to use the enhance version of Javascript called JSX -->
+    <!-- • browsers doesn't understand JSX; that's why we use Babel -->
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+
+    <!-- Will only run once the code above is satisfied -->
+    <script type="text/babel">
+      const container = document.querySelector(".js-container");
+      ReactDOM.createRoot(container).render(
+        <h1>I'm being rendered via react</h1>
+      );
+    </script>
+  </body>
+</html>

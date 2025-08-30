@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NiCA Chatbot</title>
+  </head>
+  <body>
+    <div class="js-container">loading..</div>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+
+    <script type="text/babel">
+      // Creating and using a component is like making our own HTML elements
+      // • reusable components
+      // • able to dynamically change the values and conditions
+
+      // Chatbot: Textbox Component
+      function ChatInput() {
+        return (
+          <>
+            <input />
+            <button>Send</button>
+          </>
+        );
+      }
+
+      // Chatbox: Sender Component
+      // • on components, props were able to be deconstruct directly
+      function ChatMessage({ message, sender }) {
+        // Assigning NiCA as the chatbot
+        const isNica = sender === "robot" && "NiCA";
+
+        return (
+          <div>
+            {sender === "robot" ? (
+              <>
+                <a href="/">{isNica}</a>
+                {message}
+              </>
+            ) : (
+              <>
+                {message}
+                <a href="/">{sender}</a>
+              </>
+            )}
+          </div>
+        );
+      }
+
+      const app = (
+        <div>
+          <h2>Introducing NiCA, the newly advcanced NCA Support Solution!</h2>
+          <ChatInput />
+          <ChatMessage message="hello NiCA!!" sender="player" />
+          <ChatMessage message="Hello! How can I help you?" sender="robot" />
+          <ChatMessage message="I lost my Siren Gauntlet.." sender="player" />
+          <ChatMessage message="No worries, I got you!" sender="robot" />
+        </div>
+      );
+
+      const container = document.querySelector(".js-container");
+      ReactDOM.createRoot(container).render(app);
+    </script>
+  </body>
+</html>

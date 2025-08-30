@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Timer</title>
+  </head>
+  <body>
+    <div class="js-container">loading..</div>
+
+    <!-- External Library: DayJS -->
+    <script src="https://unpkg.com/supersimpledev@8.6.4/dayjs.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+
+    <script type="text/babel">
+      // getting the element
+      const container = document.querySelector(".js-container");
+      // storing the element to a variable
+      const root = ReactDOM.createRoot(container);
+      // rendering the component each time our interval is triggered
+      setInterval(() => {
+        const timer = dayjs().format("HH:mm:ss");
+        const paragraph = "Current Time: " + timer;
+        // displaying the actual content
+        root.render(paragraph);
+      }, 1000);
+    </script>
+  </body>
+</html>
