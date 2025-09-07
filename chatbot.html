@@ -9,6 +9,8 @@
     <script src="https://unpkg.com/supersimpledev/react.js"></script>
     <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
 
+    <script src="https://unpkg.com/supersimpledev/chatbot.js"></script>
+
     <script src="https://unpkg.com/supersimpledev/babel.js"></script>
 
     <script type="text/babel">
@@ -17,11 +19,48 @@
       // • able to dynamically change the values and conditions
 
       // Chatbot: Textbox Component
-      function ChatInput() {
+      function ChatInput({ chatMessages, setChatMessages }) {
+        // Initial value of our input element
+        const [inputText, setInputText] = React.useState("");
+
+        // Function: Send Message
+        function sendMessage() {
+          // • updating the data (setting a new copy rather than modifying the data directly) **setState
+
+          // State doesn't update immediately
+          const newChatMessages = [
+            ...chatMessages,
+            {
+              message: inputText,
+              sender: "player",
+              id: crypto.randomUUID(),
+            },
+          ];
+
+          setChatMessages(newChatMessages);
+
+          const response = Chatbot.getResponse(inputText);
+
+          setChatMessages([
+            ...newChatMessages,
+            {
+              message: response,
+              sender: "robot",
+              id: crypto.randomUUID(),
+            },
+          ]);
+
+          setInputText("");
+        }
+
+        // Function: Save Input Text
+        function saveInputText(event) {
+          setInputText(event.target.value);
+        }
         return (
           <>
-            <input />
-            <button>Send</button>
+            <input onChange={saveInputText} value={inputText} />
+            <button onClick={sendMessage}>Send</button>
           </>
         );
       }
@@ -49,19 +88,57 @@
         );
       }
 
-      const app = (
-        <div>
-          <h2>Introducing NiCA, the newly advcanced NCA Support Solution!</h2>
-          <ChatInput />
-          <ChatMessage message="hello NiCA!!" sender="player" />
-          <ChatMessage message="Hello! How can I help you?" sender="robot" />
-          <ChatMessage message="I lost my Siren Gauntlet.." sender="player" />
-          <ChatMessage message="No worries, I got you!" sender="robot" />
-        </div>
-      );
+      function ChatMessages({ chatMessages }) {
+        // Displaying Array of Components
+        // • goes on each value of our data (**typically an array) by using one of the javascript map methods
+        // • utilizing arrow function inside the map method
+        // • each value should be referenced as a parameter of our arrow function
+        // • we can now return the component and provide dynamic props using the parameter of the arrow function
+        // • lastly, key props; array of componets must have unique key
+
+        return (
+          <>
+            {/* Displaying Array of Components */}
+            {chatMessages.map((chatMessage) => {
+              return (
+                <ChatMessage
+                  message={chatMessage.message}
+                  sender={chatMessage.sender}
+                  key={chatMessage.id}
+                />
+              );
+            })}
+          </>
+        );
+      }
+
+      function App() {
+        // Initial Value: Data/React State
+        // • state is connected to HTML
+        // • when we update the state, it will update the HTML
+        const [chatMessages, setChatMessages] = React.useState([
+          { message: "hello NiCA!!", sender: "player", id: 1 },
+          { message: "Hello! How can I help you?", sender: "robot", id: 2 },
+          { message: "I lost my Siren Gauntlet..", sender: "player", id: 3 },
+          { message: "No worries, I got you!", sender: "robot", id: 4 },
+        ]);
+
+        return (
+          <div>
+            <h2>Introducing NiCA, the newly advcanced NCA Support Solution!</h2>
+            <br />
+            <ChatInput
+              chatMessages={chatMessages}
+              setChatMessages={setChatMessages}
+            />
+            <br /> <br />
+            <ChatMessages chatMessages={chatMessages} />
+          </div>
+        );
+      }
 
       const container = document.querySelector(".js-container");
-      ReactDOM.createRoot(container).render(app);
+      ReactDOM.createRoot(container).render(<App />);
     </script>
   </body>
 </html>
