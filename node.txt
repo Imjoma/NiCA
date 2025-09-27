@@ -1,0 +1,3 @@
+node = let us run javascript code outside the browser
+npm = node package manager
+    package = external packages
